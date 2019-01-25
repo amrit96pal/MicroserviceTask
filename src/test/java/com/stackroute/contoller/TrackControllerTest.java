@@ -75,10 +75,10 @@ public class TrackControllerTest {
 
     @Test
     public void insertTrackFailure() throws Exception{
-        when(trackService.saveTheTrack(any())).thenThrow(TrackAlreadyExistsException.class);
-        mockMvc.perform(MockMvcRequestBuilders.post("/music/perform")
+        when(trackService.saveTheTrack(any())).thenReturn(track);
+        mockMvc.perform(MockMvcRequestBuilders.post("/music/track")
                 .contentType(MediaType.APPLICATION_JSON_UTF8).content(asJsonString(track)))
-                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -93,10 +93,10 @@ public class TrackControllerTest {
 
     @Test
     public void getAllTracksFailure() throws Exception {
-        when(trackService.returnAllTracks()).thenThrow(TrackNotFoundExeption.class);
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/userservice")
+        when(trackService.returnAllTracks()).thenReturn(list);
+        mockMvc.perform(MockMvcRequestBuilders.post("/music/track")
                 .contentType(MediaType.APPLICATION_JSON).content(asJsonString(track)))
-                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -112,9 +112,9 @@ public class TrackControllerTest {
     @Test
     public void updateTrackFailure() throws Exception {
         when(trackService.updateTrack(anyInt(),anyString())).thenThrow(TrackNotFoundExeption.class);
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/v1/userservice")
+        mockMvc.perform(MockMvcRequestBuilders.put("/music/track")
                 .contentType(MediaType.APPLICATION_JSON).content(asJsonString(track)))
-                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -131,9 +131,9 @@ public class TrackControllerTest {
     @Test
     public void deleteTrackFailure() throws Exception{
         when(trackService.deletTrack(anyInt())).thenThrow(TrackNotFoundExeption.class);
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/v1/userservice")
+        mockMvc.perform(MockMvcRequestBuilders.delete("/music/track")
                 .contentType(MediaType.APPLICATION_JSON).content(asJsonString(track)))
-                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andDo(MockMvcResultHandlers.print());
 
     }
