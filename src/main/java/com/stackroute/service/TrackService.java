@@ -11,13 +11,13 @@ import java.util.List;
 
 public interface TrackService {
 
-    public void saveTheTrack(Track track) throws TrackAlreadyExistsException;
+    public Track saveTheTrack(Track track) throws TrackAlreadyExistsException;
 
-    public List<Track> returnAllTracks() throws TrackAlreadyExistsException;
+    public List<Track> returnAllTracks() throws TrackNotFoundExeption;
 
-    public void updateTrack(int trackId,String comments) throws TrackNotFoundExeption;
+    public Track updateTrack(int trackId,String comments) throws TrackNotFoundExeption;
 
-    public void deletTrack(int trackid) throws TrackNotFoundExeption;
+    public List<Track> deletTrack(int trackid) throws TrackNotFoundExeption;
 
-    public List<Track> getByTrackNAme(String name) throws TrackNotFoundExeption;
+//    public List<Track> getByTrackNAme(String name) throws TrackNotFoundExeption;
 }
